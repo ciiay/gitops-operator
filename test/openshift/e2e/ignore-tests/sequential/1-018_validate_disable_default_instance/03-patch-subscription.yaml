@@ -4,5 +4,4 @@ commands:
 # patches the subscription to set an environment variable
 - script: |
     oc patch -n openshift-operators subscription openshift-gitops-operator \
-      --type merge --patch '{"spec": {"config": {"env": [{"name": "DISABLE_DEFAULT_ARGOCD_INSTANCE", "value": "true"}]}}}'
-- script: sleep 20
+      --type json --patch '[{"op": "remove", "path": "/spec/config"}]'

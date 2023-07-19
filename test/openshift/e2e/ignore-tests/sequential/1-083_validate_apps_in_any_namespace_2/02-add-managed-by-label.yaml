@@ -1,0 +1,9 @@
+apiVersion: kuttl.dev/v1beta1
+kind: TestStep
+apply:
+  - add-managed-by-label.yaml
+assert:
+  - assert-managed-by.yaml
+error:
+  - error-managed-by.yaml
+unitTest: false

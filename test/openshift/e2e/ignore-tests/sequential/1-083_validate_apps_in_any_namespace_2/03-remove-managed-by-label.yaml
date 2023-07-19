@@ -1,0 +1,12 @@
+apiVersion: kuttl.dev/v1beta1
+kind: TestStep
+apply:
+  - remove-managed-by-label.yaml
+assert:
+  - assert-remove-managed-by-label.yaml
+error:
+  - error-remove-managed-by-label.yaml
+unitTest: false
+commands:
+- script: oc rollout restart statefulset.apps/openshift-gitops-application-controller -n openshift-gitops
+

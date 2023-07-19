@@ -4,4 +4,4 @@ kind: TestStep
 delete:
 - apiVersion: v1
   kind: Namespace
-  name: test-1-24-custom
+  name: test-1-83-custom

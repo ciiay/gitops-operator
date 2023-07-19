@@ -11,20 +11,23 @@ commands:
     trap cleanup INT TERM EXIT
 
     # Get credentials
+    echo "Getting credentials..."
     api_server=$(oc get routes -n openshift-gitops --field-selector metadata.name=openshift-gitops-server -o jsonpath="{.items[*]['spec.host']}")
     password=$(oc get secret openshift-gitops-cluster -n openshift-gitops -o jsonpath='{.data.admin\.password}' | base64 -d)
 
     # Login into ArgoCD
-    login=$(argocd login $api_server --username admin --password $password --insecure)
+    echo "Logging into ArgoCD..."
+    login=$(argocd login "${api_server}" --username admin --password "${password}" --insecure)
     if ! [[ "${login}" =~ "'admin:login' logged in successfully" ]]; then
-      echo "ERROR: unable to login to ArgoCD remote api server"
+      echo "ERROR: unable to login to ArgoCD remote api server: ${login}"
       exit 1
     fi
 
     # Execute 'argocd app manifest' and check the 'read tcp' error
+    echo "Executing 'argocd app manifest'..."
     app_manifests=$(argocd app manifests 1-27-argocd --source git --revision HEAD)
     if [[ "${app_manifests}" =~ 'Original error: read tcp' ]]; then
-      echo "ERROR: TCP reset error is present in this code"
+      echo "ERROR: TCP reset error is present in this code: ${app_manifests}"
       exit 2
     fi
 
