@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: gitops-operator
+  annotations:
+    github.com/project-slug: ciiay/gitops-operator
+spec:
+  type: other
+  lifecycle: unknown
+  owner: user:default/ciiay
